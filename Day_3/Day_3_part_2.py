@@ -1,19 +1,20 @@
 
 gears = []
 
-file = "test.txt"
+file = "input.txt"
+f = open(file, "r")
+lines = f.readlines()
 
 
 def get_gears():
-    f = open(file, "r")
-    lines = f.readlines()
     get_adjacent_nums(lines, 1, 3)
-"""    for i, line in enumerate(lines):
+    for i, line in enumerate(lines):
         for j, char in enumerate(line):
-            if char == "*":
-"""
+            if char == "*" and len(get_adjacent_nums(lines, i, j)) == 2:
+                gears.append((i, j))
 
-def get_adjacent_nums(lines, i , j):
+
+def get_adjacent_nums(lines, i, j):
     numbers_in_adjacent_lines = []
     numbers_found = []
     for line_i in range(i-1, i+2):
@@ -24,7 +25,6 @@ def get_adjacent_nums(lines, i , j):
         if i in vertical and j in horizontal:
             numbers_found.append(number[0])
     return numbers_found
-
 
 
 def get_numbers_line(line: str, line_nbr):
@@ -43,5 +43,12 @@ def get_numbers_line(line: str, line_nbr):
             numbers.append((int(num), i, i + num_len, line_nbr))
     return numbers
 
+
 get_gears()
-print(gears)
+answer = 0
+for gear in gears:
+    ratio = 1
+    for n in get_adjacent_nums(lines, gear[0], gear[1]):
+        ratio *= n
+    answer += ratio
+print(answer)
