@@ -1,4 +1,4 @@
-file = "input.txt"
+file = "test.txt"
 path = ["seed", "soil", "fertilizer", "water", "light", "temperature", "humidity", "location"]
 
 
@@ -45,4 +45,5 @@ def main():
     print(min(locations))
 
 
-main()
+if __name__ == "__main__":
+    main()
