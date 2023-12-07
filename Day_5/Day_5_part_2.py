@@ -1,5 +1,4 @@
 from Day_5_part_1 import *
-import itertools as it
 
 
 def format_table(i):
@@ -51,7 +50,6 @@ def main():
     seeds = [(int(seeds_data[1:].split(" ")[i]), int(seeds_data[1:].split(" ")[i+1]))
              for i in range(0, len(seeds_data[1:].split(" ")), 2)]
     seeds = [range(i[0], i[0]+i[1]) for i in seeds]
-    print(seeds)
     for table_index in range(1, len(path)):
         changed_seeds = []
         for line in format_table(table_index):
