@@ -1,4 +1,4 @@
-file = "test.txt"
+file = "input.txt"
 path = ["seed", "soil", "fertilizer", "water", "light", "temperature", "humidity", "location"]
 
 

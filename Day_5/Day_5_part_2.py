@@ -10,29 +10,40 @@ def format_table(i):
     return table
 
 
-def apply_line_to_input(line: tuple, input_range: range):
+def apply_line_to_seeds(line, seeds):  # line[1] = (); seeds = []
+    changed_seeds = []
+    new_seeds = []
+    for seed in seeds:
 
-    if input_range.start > line[1].stop or line[1].start > input_range.stop:
-        return (input_range,)
+        if line[1].start >= seed.stop or line[1].stop <= seed.start:  # ()[] or []()
+            new_seeds.append(seed)
+            continue
 
-    if input_range.start in line[1]:
+        if seed.start >= line[1].start:  # ([xx
+            if seed.stop <= line[1].stop:  # ([])
+                changed_seeds.append(range(seed.start + line[0],
+                                           seed.stop + line[0]))
+                continue
 
-        if input_range.stop in line[1]:
-            return (range(input_range.start + line[0], input_range.stop + line[0]),)
+            else:  # ([)]
+                changed_seeds.append(range(seed.start + line[0],
+                                           line[1].stop + line[0]))
+                new_seeds.append(range(line[1].stop, seed.stop))
+                continue
 
-        range_1 = range(input_range.start + line[0], line[1].stop + line[0])
-        range_2 = range(line[1].stop, input_range.stop)
-        return range_1, range_2
+        else:  # [(xx
+            new_seeds.append(range(seed.start, line[1].start - 1))
+            if seed.stop <= line[1].stop:  # [(])
+                changed_seeds.append(range(line[1].start + line[0],
+                                           seed.stop + line[0]))
+                continue
 
-    if line[1] in input_range:
-        range_1 = range(input_range.start, line[1].start)
-        range_2 = range(line[1].start + line[0], line[1].stop + line[0])
-        range_3 = range(line[1].stop, input_range.stop)
-        return range_1, range_2, range_3
+            else:  # [()]
+                new_seeds.append(range(line[1].stop, seed.stop))
+                changed_seeds.append(range(line[1].start + line[0],
+                                           line[1].stop + line[0]))
 
-    range_1 = range(input_range.start, line[1].start)
-    range_2 = range(line[1].start + line[0], input_range.stop + line[0])
-    return range_1, range_2
+    return new_seeds, changed_seeds
 
 
 def main():
@@ -40,14 +51,19 @@ def main():
     seeds = [(int(seeds_data[1:].split(" ")[i]), int(seeds_data[1:].split(" ")[i+1]))
              for i in range(0, len(seeds_data[1:].split(" ")), 2)]
     seeds = [range(i[0], i[0]+i[1]) for i in seeds]
-    soils = []
-    for seed in seeds:
-        for line in format_table(1):
-            for soil in apply_line_to_input(line, seed):
-                soils.append(soil)
-    print(format_table(2))
     print(seeds)
-    print(soils)
+    for table_index in range(1, len(path)):
+        changed_seeds = []
+        for line in format_table(table_index):
+            seeds, changed_temp = apply_line_to_seeds(line, seeds)
+            for s in changed_temp:
+                changed_seeds.append(s)
+        for s in changed_seeds:
+            seeds.append(s)
+    mins = []
+    for seed in seeds:
+        mins.append(seed.start)
+    print(min(mins))
 
 
 if __name__ == "__main__":
