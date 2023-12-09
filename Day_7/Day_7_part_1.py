@@ -1,4 +1,3 @@
-import os
 from functools import total_ordering
 
 file = 'input.txt'
@@ -64,7 +63,7 @@ class Hand(str):
 
         self.rank = self.type_rank * 10**10
         for i, char in enumerate(self):
-            self.rank += __get_char_rank__(char)*10**((4-i)*2)
+            self.rank += get_char_rank(char) * 10 ** ((4 - i) * 2)
 
     def __gt__(self, other) -> bool:
         return self.rank > other.rank
@@ -73,7 +72,7 @@ class Hand(str):
         return self.rank < other.rank
 
 
-def __get_char_rank__(char):
+def get_char_rank(char):
     return len(card_order) - card_order.index(char)
 
 
