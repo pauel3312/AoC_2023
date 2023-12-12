@@ -1,7 +1,7 @@
 import Day_10_part_1 as Part1
 from sys import setrecursionlimit
 
-setrecursionlimit(10000)
+setrecursionlimit(100000)
 
 loop_tiles, lines = Part1.main()
 loop_tiles = loop_tiles.keys()
@@ -72,21 +72,27 @@ def get_empties_after_squeeze(start_position: tuple[tuple[int, int], tuple[int, 
                 returns.add((position[0] + direction[0], position[1] + direction[1]))
         except IndexError:
             return set()
-
-    for tile in get_from_new_start(start_position[0], direction, start_position[1]):
-        returns.add(tile)
-    for tile in get_from_new_start(start_position[1], direction, start_position[0]):
-        returns.add(tile)
+    if returns != set():
+        return returns
+    try:
+        for tile in get_from_new_start(start_position[0], direction, start_position[1]):
+            returns.add(tile)
+        for tile in get_from_new_start(start_position[1], direction, start_position[0]):
+            returns.add(tile)
+    except RecursionError:
+        raise Exception(f'start position: {start_position}, direction: {direction}')
     forward_pos = tuple((start_position[i][0] + direction[0], start_position[i][1] + direction[1]) for i in range(2))
     if not is_linked(forward_pos[0], forward_pos[1]):
-        returns.add(get_empties_after_squeeze(forward_pos, direction))
+        for tile in get_empties_after_squeeze(forward_pos, direction):
+            returns.add(tile)
     return returns
 
 
 def get_from_new_start(start_pos, direction, start_pos_2):
-    if not is_linked(start_pos,
-                     (start_pos[0] + direction[0],
-                      start_pos[1] + direction[1])):
+    if (not is_linked(start_pos,
+                      (start_pos[0] + direction[0],
+                       start_pos[1] + direction[1])) and
+            lines[start_pos[0]+direction[0]][start_pos[1]+direction[1]] != "."):
         next_pos = (start_pos, (start_pos[0] + direction[0],
                                 start_pos[1] + direction[1]))
         new_direction = []
@@ -117,8 +123,8 @@ def print_new_pattern():
             else:
                 new_line += tile
         new_lines.append(new_line)
-    for line in new_lines:
-        print(line)
+#    for line in new_lines:
+#        print(line)
     return new_lines
 
 
@@ -151,7 +157,12 @@ def main():
                 outside_empty_tiles.add(new)
             for new in get_all_nearby_empty_tiles(tile):
                 outside_empty_tiles.add(new)
-    print_new_pattern()
+    num_inside_positions = 0
+    for line in print_new_pattern():
+        for char in line:
+            if char == ".":
+                num_inside_positions += 1
+    print(num_inside_positions)
 
 
 if __name__ == '__main__':

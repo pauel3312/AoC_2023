@@ -1,4 +1,4 @@
-file = "part_2_test_1.txt"
+file = "input.txt"
 lines = []
 
 tiles_connections = {"|": ((-1, 0), (1, 0)),
