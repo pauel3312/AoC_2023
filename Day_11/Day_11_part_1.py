@@ -1,5 +1,5 @@
 
-file = "test.txt"
+file = "input.txt"
 
 
 def get_input():
@@ -33,7 +33,6 @@ def expand_space(data):
 def get_sum_shortest_paths(galaxy_coordinates):
     sum_shortest_paths = 0
     for i, galaxy in enumerate(galaxy_coordinates):
-        print(galaxy_coordinates[i+1:])
         for pair in galaxy_coordinates[i+1:]:
             sum_shortest_paths += abs(galaxy[0]-pair[0]) + abs(galaxy[1]-pair[1])
     return sum_shortest_paths
