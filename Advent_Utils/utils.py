@@ -11,6 +11,16 @@ if __name__ == '__main__':
 """
 
 
+def load_data(mode: bool = False):
+    if mode:
+        f = open("input.txt")
+    else:
+        f = open("test.txt")
+    returns = [line.rstrip("\n") for line in f.readlines()]
+    f.close()
+    return returns
+
+
 def add_files(day: int):
     os.chdir("..")
     os.mkdir(f"Day_{day}")
@@ -26,5 +36,5 @@ def add_files(day: int):
 
 
 if __name__ == "__main__":
-    for i in range(11, 26):
+    for i in range(1, 26):
         add_files(i)
