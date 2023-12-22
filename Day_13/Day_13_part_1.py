@@ -10,7 +10,7 @@ def get_potential_horizontal_symmetry(pattern):
 
 
 def check_symmetry_centre(pattern, centre):
-    offset = 0
+    offset = 1
     while centre[0]-offset >= 0 and centre[1]+offset < len(pattern):
         if pattern[centre[0]-offset] != pattern[centre[1]+offset]:
             return False
