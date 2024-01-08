@@ -28,13 +28,17 @@ def move_all_rocks_north(data):
     return data
 
 
-def main():
-    data = load_data(True)
-    data = move_all_rocks_north(data)
+def calculate_load(data):
     total_load = 0
     for rock in get_rocks_north_to_south(data):
         total_load += len(data) - rock[0]
     return total_load
+
+
+def main():
+    data = load_data(True)
+    data = move_all_rocks_north(data)
+    return calculate_load(data)
 
 
 if __name__ == '__main__':
