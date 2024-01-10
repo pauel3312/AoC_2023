@@ -18,7 +18,7 @@ def cycle(data):
 
 
 def main():
-    data = load_data(True)
+    data = load_data(14, 2023, True)
     old_datasets = [data, ]
     data = cycle(data)
     while data not in old_datasets:

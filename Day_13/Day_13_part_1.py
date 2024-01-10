@@ -42,7 +42,7 @@ def separate_patterns(data):
 
 
 def main():
-    data = load_data(True)
+    data = load_data(13, 2023, True)
     patterns = separate_patterns(data)
     checked_patterns = []
     result = 0

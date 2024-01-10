@@ -13,7 +13,7 @@ def hash_str(str_in: str) -> int:
 
 
 def main():
-    data = load_data(True)[0].split(',')
+    data = load_data(15, 2023, True)[0].split(',')
     sum_hashes = 0
     for elem in data:
         sum_hashes += hash_str(elem)

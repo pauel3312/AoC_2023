@@ -62,7 +62,7 @@ def beam_step(position, direction) -> None:
 
 def main():
     global data
-    data = load_data()
+    data = load_data(16, 2023, False)
     beam_step((0, 0), (0, 1))
     return beam_starts
     

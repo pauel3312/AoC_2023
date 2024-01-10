@@ -20,7 +20,7 @@ def get_box_focussing_power(box_index, box, box_order):
 
 
 def main():
-    data = load_data(True)[0].split(',')
+    data = load_data(15, 2023, True)[0].split(',')
     boxes = []
     boxes_orders = []
     for i in range(256):

@@ -37,7 +37,7 @@ def get_num_valid_entries(data, hints):
 
 
 def main():
-    lines = load_data(True)
+    lines = load_data(12, 2023, True)
     result = 0
 
     for line in lines:

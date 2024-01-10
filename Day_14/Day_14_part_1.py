@@ -36,7 +36,7 @@ def calculate_load(data):
 
 
 def main():
-    data = load_data(True)
+    data = load_data(14, 2023, True)
     data = move_all_rocks_north(data)
     return calculate_load(data)
 
