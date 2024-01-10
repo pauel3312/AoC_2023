@@ -1,9 +1,11 @@
 import os
 
 default_file_pattern = """
+from Advent_Utils.utils import load_data
+
 
 def main():
-    None
+    data = load_data({}, 2023, False)
     
 
 if __name__ == '__main__':
@@ -11,27 +13,32 @@ if __name__ == '__main__':
 """
 
 
-def load_data(mode: bool = False):
+def load_data(day: int, year: int, mode: bool = False):
     if mode:
-        f = open("input.txt")
+        os.system(f"aocd {day} {year} > temp")
+        f = open("temp")
     else:
         f = open("test.txt")
     returns = [line.rstrip("\n") for line in f.readlines()]
     f.close()
+    if mode:
+        os.remove("temp")
     return returns
 
 
 def add_files(day: int):
     os.chdir("..")
-    os.mkdir(f"Day_{day}")
+    try:
+        os.mkdir(f"Day_{day}")
+    except FileExistsError:
+        pass
     os.chdir(f"Day_{day}")
-    for file in ["input.txt",
-                 "test.txt",
+    for file in ["test.txt",
                  f"Day_{day}_part_1.py",
                  f"Day_{day}_part_2.py"]:
         f = open(file, "w")
         if file.endswith('py'):
-            f.write(default_file_pattern)
+            f.write(default_file_pattern.format(day))
         f.close()
 
 
