@@ -14,13 +14,13 @@ def get_box_focussing_power(box_index, box, box_order):
     box_multiplier = box_index+1
     box_power = 0
     for lens in box.items():
-        box_power += box_multiplier * int(lens[1]) * box_order.index(lens[0])
+        box_power += box_multiplier * int(lens[1]) * (box_order.index(lens[0])+1)
 
     return box_power
 
 
 def main():
-    data = load_data()[0].split(',')
+    data = load_data(True)[0].split(',')
     boxes = []
     boxes_orders = []
     for i in range(256):
