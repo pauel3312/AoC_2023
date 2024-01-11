@@ -1,7 +1,6 @@
 import os
 
-default_file_pattern = """
-from Advent_Utils.utils import load_data
+default_file_pattern = """from Advent_Utils.utils import load_data
 
 
 def main():
