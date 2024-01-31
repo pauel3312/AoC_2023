@@ -1,4 +1,5 @@
 import os
+import aocd
 
 default_file_pattern = """from Advent_Utils.utils import load_data
 
@@ -14,14 +15,11 @@ if __name__ == '__main__':
 
 def load_data(day: int, year: int, mode: bool = False):
     if mode:
-        os.system(f"aocd {day} {year} > temp")
-        f = open("temp")
+        returns = [line for line in aocd.get_data(day=day, year=year).split("\n")]
     else:
         f = open("test.txt")
-    returns = [line.rstrip("\n") for line in f.readlines()]
-    f.close()
-    if mode:
-        os.remove("temp")
+        returns = [line.rstrip("\n") for line in f.readlines()]
+        f.close()
     return returns
 
 
